@@ -1,0 +1,12 @@
+# Ignore raw data files (to save space and keep repo clean)
+data/raw/
+
+# Ignore Python cache and virtual environments
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Ignore OS files
+.DS_Store
