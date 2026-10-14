@@ -1,5 +1,6 @@
-# Ignore raw data files (to save space and keep repo clean)
-data/raw/
+# Raw NASA data is kept local. The processed test set is tracked for deployment.
+data/raw/*
+!data/raw/train_FD001.txt
 
 # Ignore Python cache and virtual environments
 __pycache__/
@@ -10,3 +11,6 @@ env/
 
 # Ignore OS files
 .DS_Store
+
+# Trained model is generated locally and should be included in a deployment commit.
+# Do not ignore models/xgb_model.joblib.
