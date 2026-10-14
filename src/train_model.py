@@ -1,15 +1,19 @@
-import os
+from pathlib import Path
 import joblib
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error
 import numpy as np
 from data_preprocessing import process_training_data
 
-# Ensure models directory exists
-os.makedirs('../models', exist_ok=True)
+ROOT_DIR = Path(__file__).resolve().parents[1]
+TRAIN_DATA = ROOT_DIR / 'data' / 'raw' / 'train_FD001.txt'
+MODEL_DIR = ROOT_DIR / 'models'
+MODEL_PATH = MODEL_DIR / 'xgb_model.joblib'
+
+MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
 print("Loading and preprocessing data...")
-train_df = process_training_data('../data/raw/train_FD001.txt')
+train_df = process_training_data(TRAIN_DATA)
 
 print("Splitting data into Train and Validation sets...")
 val_engines = train_df['unit_number'].unique()[-20:] 
@@ -43,6 +47,5 @@ rmse = np.sqrt(mean_squared_error(y_val, preds))
 print(f"Validation RMSE: {rmse:.2f}")
 
 # Save the model
-model_path = '../models/xgb_model.joblib'
-joblib.dump(model, model_path)
-print(f"Model saved successfully to {model_path}")
+joblib.dump(model, MODEL_PATH)
+print(f"Model saved successfully to {MODEL_PATH}")
